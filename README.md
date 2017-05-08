@@ -1,2 +1,6 @@
 # algorithad
-Algorithm analysis and design
+算法分析与设计实例测试
+
+1.棋盘覆盖问题。
+描述：在一个2^k*2^k个方格组成的棋盘中，恰有一个方格与其它方格不同，称该方格为一特殊方格，称该棋盘为一特殊棋盘。有L型骨牌占用三个方格。求将特殊棋盘使用L型骨牌全部覆盖的方法。
+解决方案：chessboard\chessboard.py
