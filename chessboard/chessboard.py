@@ -42,6 +42,15 @@ class ChessBoard():
         '''
         self._data[irow][icol] = data
 
+    def inChessBoard(self,irow,icol):
+        '''
+        If (irow,icol) block in chessboard,return True,else return False.
+        '''
+        if irow < self.getRowMaxNum() and icol < self.getColMaxNum():
+            return True
+        else:
+            return False
+
     def __str__(self):
         return 'row:{};col:{}\ndata:{}'.format(self._row,self._col,self._data)
 
@@ -67,6 +76,18 @@ class RelativeChessBoard():
         self._rel_col = relative_col_start_pos
         self._chessboard = chessboard
 
+    def getRowMaxNum(self):
+        '''
+        Get this chessboard row length .
+        '''
+        return self._row
+
+    def getColMaxNum(self):
+        '''
+        Get this chessboard col length.
+        '''
+        return self._col
+
     def getBoard(self,irow,icol):
         '''
         Get chessboard block by [irow][icol].
@@ -80,6 +101,15 @@ class RelativeChessBoard():
         Set data to chessboard block by [irow][icol].
         '''
         self._data[irow+self._rel_row][icol+self._rel_col] = data
+
+    def inChessBoard(self,irow,icol):
+        '''
+        If (irow,icol) block in chessboard,return True,else return False.
+        '''
+        if irow < self.getRowMaxNum() and icol < self.getColMaxNum():
+            return True
+        else:
+            return False
 
     def __str__(self):
         return 'relative row:{} ,relative col:{} ; row:{} , col:{}'.format(
@@ -150,6 +180,9 @@ class SpecialChessBoard():
             spb_row:the special block row.
             spb_col:the special bloc col.
         '''
+        if not self._chessboard.inChessBoard(spb_row,spb_col):
+            raise IndexError('the special block out of chessboard range!')
+            
         self._spb_row = spb_row
         self._spb_col = spb_col
 
