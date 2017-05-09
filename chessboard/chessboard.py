@@ -94,13 +94,13 @@ class RelativeChessBoard():
         '''
         if irow >= self._row or icol >= self._col:
             raise IndexError('Index out of range!')
-        return self._data[irow+self._rel_row][icol+self._rel_col]
+        return self._chessboard.getBoard(irow+self._rel_row,icol+self._rel_col)
 
     def setBoard(self,irow,icol,data):
         '''
         Set data to chessboard block by [irow][icol].
         '''
-        self._data[irow+self._rel_row][icol+self._rel_col] = data
+        self._chessboard.setBoard(irow+self._rel_row,icol+self._rel_col,data)
 
     def inChessBoard(self,irow,icol):
         '''
@@ -182,7 +182,7 @@ class SpecialChessBoard():
         '''
         if not self._chessboard.inChessBoard(spb_row,spb_col):
             raise IndexError('the special block out of chessboard range!')
-            
+
         self._spb_row = spb_row
         self._spb_col = spb_col
 
