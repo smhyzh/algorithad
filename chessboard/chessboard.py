@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 # chessboard
 #
-
 '''
 For special chessboard problem.
 '''
+
 
 class ChessBoard():
     '''
@@ -13,10 +13,11 @@ class ChessBoard():
         row:the chessboard row num.
         col:the chessboard col num.
     '''
-    def __init__(self,row=1,col=1):
+
+    def __init__(self, row=1, col=1):
         self._row = row
         self._col = col
-        self._data = [[None]*col for i in range(row) ]
+        self._data = [[None] * col for i in range(row)]
 
     def getRowMaxNum(self):
         '''
@@ -30,19 +31,19 @@ class ChessBoard():
         '''
         return self._col
 
-    def getBoard(self,irow,icol):
+    def getBoard(self, irow, icol):
         '''
         Get chessboard block by [irow][icol].
         '''
         return self._data[irow][icol]
 
-    def setBoard(self,irow,icol,data):
+    def setBoard(self, irow, icol, data):
         '''
         Set data to chessboard block by [irow][icol].
         '''
         self._data[irow][icol] = data
 
-    def inChessBoard(self,irow,icol):
+    def inChessBoard(self, irow, icol):
         '''
         If (irow,icol) block in chessboard,return True,else return False.
         '''
@@ -52,7 +53,8 @@ class ChessBoard():
             return False
 
     def __str__(self):
-        return 'row:{};col:{}\ndata:{}'.format(self._row,self._col,self._data)
+        return 'row:{};col:{}\ndata:{}'.format(self._row, self._col,
+                                               self._data)
 
 
 class RelativeChessBoard():
@@ -63,12 +65,15 @@ class RelativeChessBoard():
         relative_row_start_pos:this chessboard row relative to main chessboard.
         relative_col_start_pos:this chessboard col relative to main chessboard.
     '''
-    def __init__(self,chessboard,row,col,
+
+    def __init__(self,
+                 chessboard,
+                 row,
+                 col,
                  relative_row_start_pos=0,
-                 relative_col_start_pos=0
-                 ):
+                 relative_col_start_pos=0):
         if (row + relative_row_start_pos > chessboard.getRowMaxNum() or
-            col + relative_col_start_pos > chessboard.getColMaxNum()):
+                col + relative_col_start_pos > chessboard.getColMaxNum()):
             raise ValueError('Out of range of chessboard!')
         self._row = row
         self._col = col
@@ -88,21 +93,23 @@ class RelativeChessBoard():
         '''
         return self._col
 
-    def getBoard(self,irow,icol):
+    def getBoard(self, irow, icol):
         '''
         Get chessboard block by [irow][icol].
         '''
         if irow >= self._row or icol >= self._col:
             raise IndexError('Index out of range!')
-        return self._chessboard.getBoard(irow+self._rel_row,icol+self._rel_col)
+        return self._chessboard.getBoard(irow + self._rel_row,
+                                         icol + self._rel_col)
 
-    def setBoard(self,irow,icol,data):
+    def setBoard(self, irow, icol, data):
         '''
         Set data to chessboard block by [irow][icol].
         '''
-        self._chessboard.setBoard(irow+self._rel_row,icol+self._rel_col,data)
+        self._chessboard.setBoard(irow + self._rel_row, icol + self._rel_col,
+                                  data)
 
-    def inChessBoard(self,irow,icol):
+    def inChessBoard(self, irow, icol):
         '''
         If (irow,icol) block in chessboard,return True,else return False.
         '''
@@ -113,7 +120,8 @@ class RelativeChessBoard():
 
     def __str__(self):
         return 'relative row:{} ,relative col:{} ; row:{} , col:{}'.format(
-            self._rel_row,self._rel_col,self._row,self._col)
+            self._rel_row, self._rel_col, self._row, self._col)
+
 
 class DominoL():
     '''
@@ -121,11 +129,15 @@ class DominoL():
         corner_block:the pos(rwo,col) of corner block of L domino.
         out_block:the pos(row,col) of block which next to L domino.
     '''
-    def __init__(self,corner_block=(0,0),out_block=(0,0)):
 
-        self._blocks = self._getBlocksPos(corner_block,out_block)
+    def __init__(self, corner_block=(0, 0), out_block=(0, 0)):
 
-    def _getBlocksPos(self,corner_block,out_block):
+        self._blocks = self._getBlocksPos(corner_block, out_block)
+
+    def __str__(self):
+        return str([str(block) for block in self._blocks])
+
+    def _getBlocksPos(self, corner_block, out_block):
         '''
         Get the three pos of block by corner block and out block.
         '''
@@ -133,72 +145,41 @@ class DominoL():
             # out block at the bottom of corner block.
             if corner_block[1] + 1 == out_block[1]:
                 # out block at the right of corner block.
-                one_side = (corner_block[0]+1,corner_block[1])
-                other_side = (corner_block[0],corner_block[1]+1)
-                return [one_side,corner_block,other_side]
+                one_side = (corner_block[0] + 1, corner_block[1])
+                other_side = (corner_block[0], corner_block[1] + 1)
+                return [one_side, corner_block, other_side]
             elif corner_block[1] - 1 == out_block[1]:
                 # out block at the left of corner block.
-                one_side = (corner_block[0]+1,corner_block[1])
-                other_side = (corner_block[0],corner_block[1]-1)
-                return [one_side,corner_block,other_side]
+                one_side = (corner_block[0] + 1, corner_block[1])
+                other_side = (corner_block[0], corner_block[1] - 1)
+                return [one_side, corner_block, other_side]
             else:
-                raise ValueError('corner block and out block must be neighbor!')
+                raise ValueError(
+                    'corner block and out block must be neighbor!')
         elif corner_block[0] - 1 == out_block[0]:
             # out block at the up of corner block.
             if corner_block[1] + 1 == out_block[1]:
                 # out block at the right of corner block.
-                one_side = (corner_block[0]-1,corner_block[1])
-                other_side = (corner_block[0],corner_block[1]+1)
-                return [one_side,corner_block,other_side]
+                one_side = (corner_block[0] - 1, corner_block[1])
+                other_side = (corner_block[0], corner_block[1] + 1)
+                return [one_side, corner_block, other_side]
             elif corner_block[1] - 1 == out_block[1]:
                 # out block at the left of corner block.
-                one_side = (corner_block[0]-1,corner_block[1])
-                other_side = (corner_block[0],corner_block[1]-1)
-                return [one_side,corner_block,other_side]
+                one_side = (corner_block[0] - 1, corner_block[1])
+                other_side = (corner_block[0], corner_block[1] - 1)
+                return [one_side, corner_block, other_side]
             else:
-                raise ValueError('corner block and out block must be neighbor!')
+                raise ValueError(
+                    'corner block and out block must be neighbor!')
         else:
             raise ValueError('corner block and out block must be neighbor!')
 
-class SpecialChessBoard():
-    '''
-    This class is for special chessboard.
-        chessboard:a instance of ChessBoard or RelativeChessBoard.
-    '''
-    def __init__(self,chessboard):
-        self._chessboard = chessboard
-
-    def __getattr__(self,attribute):
-        return getattr(self._chessboard,attribute)
-
-    def __str__(self):
-        return str(self._chessboard)
-
-    def setSpecialBlock(self,spb_row,spb_col):
+    def relativePos(self, vector=(0, 0)):
         '''
-        Set special block for this special chessboard.
-            spb_row:the special block row.
-            spb_col:the special bloc col.
+        Change pos from relative to real pos.
         '''
-        if not self._chessboard.inChessBoard(spb_row,spb_col):
-            raise IndexError('the special block out of chessboard range!')
-
-        self._spb_row = spb_row
-        self._spb_col = spb_col
-
-    def getFillPath(self):
-        pass
-
-
-def main():
-    cb = ChessBoard(2,4)
-    cb = SpecialChessBoard(cb)
-    cb.setBoard(1,2,5)
-    cb.setBoard(0,3,6)
-    rc = RelativeChessBoard(cb,1,4,1,0)
-    print(cb)
-    print(rc)
-
-
-if __name__ == '__main__':
-    main()
+        new_blocks = []
+        for block in self._blocks:
+            new_blocks.append((block[0] + vector[0], block[1] + vector[1]))
+        self._blocks = new_blocks
+        return new_blocks
